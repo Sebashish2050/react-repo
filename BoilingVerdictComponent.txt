@@ -1,0 +1,49 @@
+class BoilingVerdict extends React.Component {
+
+    constructor(props) {
+        super(props)
+    }
+
+    render(){
+        console.log("temperature22::   "+this.props.temp)
+        return(
+            this.props.temp > 100 ? <p>The water would boil.</p> : <p>The water would not boil.</p>
+        )
+    }
+}
+
+class Calculator extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            temperature : 0
+        }
+
+        this.updateChange = this.updateChange.bind(this);
+    }
+
+    updateChange(event) {
+        this.setState({
+            temperature: event.target.value
+        })
+    }
+    
+    render() {
+        const temperature = this.state.temperature;
+        console.log("temperature::   "+temperature)
+        return(
+            <fieldset>
+                <legend> Enter temperature in celcius </legend>
+                <input type="number" val={temperature} onChange={this.updateChange} />
+                <BoilingVerdict temp = {parseFloat(temperature)} />
+            </fieldset>
+        )
+    }
+}
+
+class App extends React.Component {
+    render() {
+        return <Calculator />
+    }
+}

@@ -1,0 +1,73 @@
+class Clock extends React.Component {
+    
+    constructor() {
+        super();
+        this.state = {
+            date: new Date(),
+            isToggleOn: true,
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    startStopTimer() {
+        if(this.state.isToggleOn) {
+            this.stopTimer();
+        } else {
+            this.startTimer();
+        }
+    }
+
+    startTimer() {
+        this.timerId = setInterval(
+            () => this.tick(), 1000
+        )
+    }
+
+    stopTimer() {
+        clearInterval(this.timerId);
+    }
+    componentDidMount(){
+        this.startTimer();
+    }
+
+    componentWillUnmount(){
+       this.stopTimer();
+    }
+
+    tick() {
+        this.setState({
+            date: new Date()
+        });
+    }
+
+    handleClick() {
+        this.setState(previousState => ({
+            isToggleOn: !previousState.isToggleOn
+        }));
+
+        this.startStopTimer();
+    }
+
+    render(){
+        return (
+            <div>
+                <h1> Welcome </h1>
+                <h3> Time: {this.state.date.toLocaleTimeString()}</h3>
+                <button onClick={this.handleClick}>
+                    {this.state.isToggleOn ? "OFF": "ON"}
+                </button>
+            </div>
+        );
+    }
+}
+
+class App extends React.Component{
+    render(){
+        return (
+            <div>
+                <Clock/>
+            </div>
+        )
+    }
+}

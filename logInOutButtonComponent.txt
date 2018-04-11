@@ -1,0 +1,84 @@
+class UserGreetings extends React.Component {
+    render(){
+       return <h1> Greeting from user </h1>
+    }
+}
+
+class GuestGreetings extends React.Component {
+    render() {
+        return <h1> Greeting from guest </h1>;
+    }
+}
+
+class LoginButton extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return(
+            <button onClick={this.props.onClick}>LOGIN</button>
+        )
+    }
+}
+
+class LogoutButton extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return(
+            <button onClick={this.props.onClick}>LOGOUT</button>
+        )
+    }
+}
+
+
+class LoginControl extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            isLoggedIn: false
+        }
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    }
+    
+    handleLoginClick() {
+        this.setState({
+            isLoggedIn : true
+        })
+    }
+
+    handleLogoutClick() {
+        this.setState({
+            isLoggedIn : false
+        })
+    }
+    render(){
+        const isLoggedIn = this.state.isLoggedIn;
+        const button = isLoggedIn ? <LogoutButton onClick={this.handleLogoutClick} /> : <LoginButton onClick={this.handleLoginClick} />
+        return(
+            <div>
+                <Greet isLoggedIn = {false}/>
+                {button}
+            </div>
+        )
+    }
+}
+
+class Greet extends React.Component {
+
+    constructor(props) {
+        super(props);
+	}
+
+    render() {
+        if(this.props.isLoggedIn) {
+           return <UserGreetings />    
+        }else {
+            return <GuestGreetings />
+        }
+    }
+}
